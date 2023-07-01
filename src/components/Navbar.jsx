@@ -7,7 +7,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
 import { useNavigate } from "react-router-dom";
 
-export default function Navbar(isScrolled) {
+export default function Navbar({ isScrolled }) {
   const [showSearch, setShowSearch] = useState(false);
   const [inputHover, setInputHover] = useState(false);
 
@@ -28,7 +28,7 @@ export default function Navbar(isScrolled) {
 
   return (
     <Container>
-      <nav className={`flex ${isScrolled ? "scrolled" : ""}`}>
+      <nav className={`${isScrolled ? "scrolled" : ""} flex`}>
         <div className="left flex a-center">
           <div className="brand flex a-center j-center ">
             <img src={logo} alt="logo" />
@@ -53,7 +53,7 @@ export default function Navbar(isScrolled) {
                 if (!inputHover) {
                   setShowSearch(false);
                 }
-              }}z
+              }}
             >
               <FaSearch />
             </button>
