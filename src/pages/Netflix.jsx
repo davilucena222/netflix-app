@@ -29,21 +29,11 @@ export default function Login() {
     }
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY === 0) {
-        setIsScrolled(false);
-      } else {
-        setIsScrolled(true);
-      }
-    };
+  window.onscroll = () => {
+    setIsScrolled(window.pageYOffset === 0 ? false : true);
 
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    return () => (window.onscroll = null);
+  };
 
   return (
     <Container>
