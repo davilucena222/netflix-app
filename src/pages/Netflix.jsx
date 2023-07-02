@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies, getGenres } from "../store";
+import Slider from "../components/Slider";
 
 export default function Login() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -63,6 +64,8 @@ export default function Login() {
           </div>
         </div>
       </div>
+
+      <Slider movies={movies} />
     </Container>
   )
 }
