@@ -28,7 +28,7 @@ export default function Movies() {
     if (genresLoaded) {
       dispatch(fetchMovies({ type: "movies" }));
     }
-  }, []);
+  }, [genresLoaded]);
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -49,7 +49,7 @@ export default function Movies() {
       </div>
 
       <div className="data">
-        <SelectGenre genres={genres} />
+        <SelectGenre genres={genres} type="movies" />
         
         {movies.length > 0 ? <Slider movies={movies} /> : (
           <NotAvailable />

@@ -12,8 +12,6 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
-  const videoURL = "https://www.youtube.com/watch?v=bV0RAcuG2Ao";
-  
   return (
       <Container
         onMouseEnter={() => setIsHovered(true)}
