@@ -46,15 +46,10 @@ const getRawData = async (api, genres, paging) => {
   return moviesArray;
 };
 
-export const fetchDataByGenre = createAsyncThunk("netflix/moviesByGenres", async({ genre, type }, thunkAPI) => {
-  console.log("In fetching data!", genre, type);
-
+export const fetchDataByGenre = createAsyncThunk("netflix/genre", async({ genre, type }, thunkAPI) => {
   const { netflix: { genres } } = thunkAPI.getState();
 
-  const data = getRawData(`${process.env.REACT_APP_TMDB_BASE_URL}/discover/${type}/?api_key=${process.env.REACT_APP_API_KEY_TMDB}&with_genres=${genre}`, genres);
-  console.log(data);
-
-  return data;
+  return getRawData(`${process.env.REACT_APP_TMDB_BASE_URL}/discover/${type}?api_key=${process.env.REACT_APP_API_KEY_TMDB}&with_genres=${genre}`, genres);
 });
 
 export const fetchMovies = createAsyncThunk("netflix/tranding", async({ type }, thunkAPI) => {

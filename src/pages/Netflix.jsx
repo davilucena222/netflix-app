@@ -21,7 +21,7 @@ export default function Login() {
 
   useEffect(() => {
     dispatch(getGenres());
-  }, []);
+  }, [genresLoaded]);
 
   useEffect(() => {
     if (genresLoaded) {
