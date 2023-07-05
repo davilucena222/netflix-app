@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const userRoutes = require("./routes/UserRoutes")
 
 const app = express();
 
@@ -12,7 +13,11 @@ mongoose.connect("mongodb://localhost:27017", {
   useUnifiedTopology: true,
 }).then(() => {
   console.log("MongoDB connected!");
+}).catch((error) => {
+  console.error(error);
 });
+
+app.use("/api/user", userRoutes);
 
 app.listen(5000, () => {
   console.log("Server is running on port 5000!");

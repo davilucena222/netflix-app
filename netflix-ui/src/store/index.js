@@ -35,7 +35,7 @@ const createArrayFromRawData = (array, moviesArray, genres) => {
   });
 };
 
-const getRawData = async (api, genres, paging) => {
+const getRawData = async (api, genres, paging = false) => {
   const moviesArray = [];
 
   for (let i = 1; moviesArray.length < 60 && i < 10; i++) {
@@ -58,6 +58,21 @@ export const fetchMovies = createAsyncThunk("netflix/tranding", async({ type }, 
   return getRawData(`${process.env.REACT_APP_TMDB_BASE_URL}/trending/${type}/week?api_key=${process.env.REACT_APP_API_KEY_TMDB}`, genres, true);
 });
 
+export const getUsersLikedMovies = createAsyncThunk("netflix/getLiked", async (email) => {
+  const { data: {movies } } = await axios.get(`http://localhost:5000/api/user/liked/${email}`);
+
+  return movies;
+})
+
+export const removeMovieFromLiked = createAsyncThunk("netflix/deleteLiked", async ({ movieId, email }) => {
+  const { data: { movies } } = await axios.put("http://localhost:5000/api/user/remove", {
+    email, 
+    movieId
+  });
+
+  return movies;
+});
+
 const NetflixSlice = createSlice({
   name: "Netflix",
   initialState,
@@ -74,6 +89,14 @@ const NetflixSlice = createSlice({
     builder.addCase(fetchDataByGenre.fulfilled, (state, action) => {
       state.movies = action.payload;
     });
+
+    builder.addCase(getUsersLikedMovies.fulfilled, (state, action) => {
+      state.movies = action.payload;
+    });
+
+    builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
+      state.movies = action.payload;
+    });
   },
 });
 
@@ -82,3 +105,5 @@ export const store = configureStore({
     netflix: NetflixSlice.reducer,
   }
 });
+
+export const { setGenres, setMovies } = NetflixSlice.actions;

@@ -12,6 +12,7 @@ import SelectGenre from "../components/SelectGenre";
 
 export default function TvShows() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [user, setUser] = useState(undefined);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,6 +20,13 @@ export default function TvShows() {
   const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
+  const dataLoading = useSelector((state) => state.netflix.dataLoading);
+
+  useEffect(() => {
+    if (!genres.length) {
+      dispatch(getGenres());
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(getGenres());
@@ -30,17 +38,19 @@ export default function TvShows() {
     }
   }, [genresLoaded]);
 
+  onAuthStateChanged(firebaseAuth, (currentUser) => {
+    if (currentUser) {
+      setUser(currentUser.uid);
+    } else {
+      navigate("/login");
+    }
+  })
+
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
 
     return () => (window.onscroll = null);
   };
-
-  onAuthStateChanged(firebaseAuth, (currentUser) => {
-    // if (currentUser) {
-    //   navigate("/");
-    // }
-  })
 
   return (
     <Container>
@@ -51,8 +61,15 @@ export default function TvShows() {
       <div className="data">
         <SelectGenre genres={genres} type="tv" />
         
-        {movies.length > 0 ? <Slider movies={movies} /> : (
-          <NotAvailable />
+        {movies.length ? (
+          <>
+            <Slider movies={movies} />
+          </>
+        ) : (
+          <h1 className="not-available">
+            No TV Shows avaialble for the selected genre. Please select a
+            different genre.
+          </h1>
         )}
       </div>
     </Container>

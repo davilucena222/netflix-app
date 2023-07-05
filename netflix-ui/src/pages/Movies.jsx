@@ -20,6 +20,8 @@ export default function Movies() {
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
 
+  const [user, setUser] = useState(undefined);
+
   useEffect(() => {
     dispatch(getGenres());
   }, []);
@@ -37,10 +39,13 @@ export default function Movies() {
   };
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
-    // if (currentUser) {
-    //   navigate("/");
-    // }
-  })
+    if (currentUser) {
+      setUser(currentUser.uid);
+    }
+    else {
+      navigate("/login");
+    }
+  });
 
   return (
     <Container>
@@ -51,7 +56,7 @@ export default function Movies() {
       <div className="data">
         <SelectGenre genres={genres} type="movie" />
         
-        {movies.length > 0 ? <Slider movies={movies} /> : (
+        {movies?.length > 0 ? <Slider movies={movies} /> : (
           <NotAvailable />
         )}
       </div>

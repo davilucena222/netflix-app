@@ -5,12 +5,39 @@ import { IoPlayCircleSharp } from "react-icons/io5";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiThumbUpFill, RiThumbDownFill } from "react-icons/ri";
 import { BiChevronDown } from "react-icons/bi";
+import { useDispatch } from "react-redux";
 import { BsCheck } from "react-icons/bs";
 import videoWatch from "../assets/video.mp4";
+import { removeMovieFromLiked } from "../store";
+import { onAuthStateChanged } from "firebase/auth";
+import { firebaseAuth } from "../utils/firebase-config";
+import axios from "axios";
 
 export default React.memo(function Card({ movieData, isLiked = false }) {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState(undefined);
+
+  onAuthStateChanged(firebaseAuth, (currentUser) => {
+    if (currentUser) {
+      setEmail(currentUser.email);
+    } else {
+      navigate("/login");
+    }
+  });
+
+  
+  const addToList = async () => {
+    try {
+      await axios.post("http://localhost:5000/api/user/add", {
+        email,
+        data: movieData,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
       <Container
@@ -51,9 +78,9 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
                     <RiThumbDownFill title="Dislike" />
                     {
                       isLiked ? (
-                        <BsCheck title="Remove from list" />
+                        <BsCheck title="Remove from list" onClick={() => dispatch(removeMovieFromLiked({ movieId: movieData.id, email }))} />
                       ) : (
-                        <AiOutlinePlus title="Add to my list" />
+                        <AiOutlinePlus title="Add to my list" onClick={addToList} />
                       )
                     }
                   </div>
@@ -66,7 +93,7 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
                 <div className="genres flex">
                   <ul className="flex">
                     {movieData.genres.map((genre)=> (
-                      <li>{genre}</li>
+                      <li key={genre}>{genre}</li>
                     ))}
                   </ul>
                 </div>
