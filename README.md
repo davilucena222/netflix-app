@@ -1,6 +1,11 @@
 ## 🔖 Netflix Application Clone
+![image](https://github.com/davilucena222/netflix-app/assets/56702492/3e03d58b-9f93-46b4-8034-4414c861f7e9)
 
+![image](https://github.com/davilucena222/netflix-app/assets/56702492/e252aa23-2857-4e0e-aeb3-4cd47acbd597)
 
+![image](https://github.com/davilucena222/netflix-app/assets/56702492/1f53acda-72d3-4548-8cbc-8b31203ffa81)
+
+![image](https://github.com/davilucena222/netflix-app/assets/56702492/aeb95f60-9a37-491f-b475-088abb357f27)
 
 <br>
 <br>
