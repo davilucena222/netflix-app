@@ -16,11 +16,11 @@ This project was developed with the following tecnologies:
 - [React JS](https://reactjs.org)
 - [Styled Components](https://styled-components.com/)
 - [Axios](https://axios-http.com/ptbr/docs/intro)
-- [MongoDB]()
-- [Firebase]()
-- [Redux]()
-- [Node.js]()
-- [The Movie DB]()
+- [MongoDB](https://www.mongodb.com/)
+- [Firebase](https://firebase.google.com/?hl=pt)
+- [Redux](https://redux.js.org/)
+- [Node.js](https://nodejs.org/en)
+- [The Movie DB](https://www.themoviedb.org/)
 
 ## 💡 About the project 
 Netflix Application Clone is an application that was built with React.js in the front end and Node.js, and MongoDB in the back end to store the data that come from each movie, tv show, and series liked by the user. Also, the authentication was set with Firebase, and all the requests and necessary data to show for the user it is stored in redux, with redux it was possible to create functions to handle all the requests.
